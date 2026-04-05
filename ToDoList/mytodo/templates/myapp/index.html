@@ -1,0 +1,84 @@
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tasks</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+        .task-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .status {
+            float: right;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        .active {
+            background-color: green;
+        }
+        .inactive {
+            background-color: red;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📋 My Tasks</h1>
+    <div><a href="">➕ Add New Task</a></div>
+    {% for task in tasks %}
+    <div class="card">
+        <div class="task-title">
+        {% if task.is_completed %}
+            <span style="text-decoration: line-through;">{{ task.task }} (Done)</span>
+        {% else %}
+            <span>{{ task.task }} (Pending)</span>
+        {% endif %}
+        </div>
+        <p>{{ task.description|truncatechars:60 }}</p>
+        <small>⏰ {{ task.time }}</small>
+
+        <br>
+        <a href="{" class="btn">View Details</a>
+    </div>
+    {% empty %}
+        <p>No tasks available.</p>
+    {% endfor %}
+</div>
+
+</body>
+</html>
+{% endblock %}
