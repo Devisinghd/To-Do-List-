@@ -1,0 +1,66 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+
+<div class="task-card">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>📝 Task Details</h3>
+
+        {% if task.is_completed %}
+            <span class="badge badge-done">Completed</span>
+        {% else %}
+            <span class="badge badge-pending">Pending</span>
+        {% endif %}
+    </div>
+
+    <hr>
+
+    <!-- Task Title -->
+    <h4 class="task-title mb-3">
+        {% if task.is_completed %}
+            <span style="text-decoration: line-through;">
+                {{ task.task }}
+            </span>
+        {% else %}
+            {{ task.task }}
+        {% endif %}
+    </h4>
+
+    <!-- Description -->
+    <p class="text-muted">
+        {{ task.description }}
+    </p>
+
+    <!-- Meta Info -->
+    <div class="mt-4">
+        <p><strong>⏰ Time:</strong> {{ task.time }}</p>
+        <p>
+            <strong>Status:</strong>
+            {% if task.is_completed %}
+                <span class="badge badge-done">Completed</span>
+            {% else %}
+                <span class="badge badge-pending">Pending</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-4 d-flex gap-2">
+        <a href="{% url 'mytodo:main' %}" class="btn btn-secondary">
+            ⬅ Back
+        </a>
+
+        <a href="#" class="btn btn-custom">
+            ✏ Edit
+        </a>
+
+        <a href="#" class="btn btn-danger">
+            🗑 Delete
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
