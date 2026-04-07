@@ -1,4 +1,4 @@
-(% {% extends "myapp/base.html" %})
+{% extends "myapp/base.html" %}
 {% block content %}
 <!DOCTYPE html>
 <html>
@@ -73,7 +73,7 @@
         <small>⏰ {{ task.time }}</small>
 
         <br>
-        <a href="{" class="btn">View Details</a>
+        <a href="{% url 'mytodo:detail' task.id %}" class="btn">View Details</a>
     </div>
     {% empty %}
         <p>No tasks available.</p>
