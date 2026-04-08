@@ -6,44 +6,46 @@
 
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>📝 Task Details</h3>
-
-        {% if task.is_completed %}
-            <span class="badge badge-done">Completed</span>
-        {% else %}
-            <span class="badge badge-pending">Pending</span>
-        {% endif %}
-    </div>
-
-    <hr>
-
+        <h3 class="flex items-center gap-2 text-xl font-bold text-slate-800 border-b-2 border-indigo-500 pb-2 mb-4">
+        <span class="text-2xl">📝</span> Task Details
+        </h3>
     <!-- Task Title -->
     <h4 class="task-title mb-3">
         {% if task.is_completed %}
             <span style="text-decoration: line-through;">
-                {{ task.task }}
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            {{ task.task|upper }}</h1>
             </span>
         {% else %}
-            {{ task.task }}
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+            {{ task.task|upper }}</h1>
         {% endif %}
     </h4>
-
     <!-- Description -->
-    <p class="text-muted">
-        {{ task.description }}
-    </p>
-
+    <div class="relative pl-6 py-2 border-l-4 border-indigo-400 bg-indigo-50/50 rounded-r-xl">
+        <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 text-4xl text-indigo-200">
+            <p class="text-slate-700 text-lg leading-relaxed font-medium italic">
+                {{ task.description|default:"Kuch likha nahi gaya hai..." }}
+            </p>
+        </span>
+    </div>
     <!-- Meta Info -->
     <div class="mt-4">
-        <p><strong>⏰ Time:</strong> {{ task.time }}</p>
-        <p>
-            <strong>Status:</strong>
+        <p class="text-slate-600 text-lg">
+            <strong>⏰ Time:</strong> {{ task.time }}
+        </p>
+        <p class="text-slate-600">
+            <strong class="text-slate-700">Status:</strong>
             {% if task.is_completed %}
-                <span class="badge badge-done">Completed</span>
+                <span class="badge badge-done text-black">Completed</span>
             {% else %}
                 <span class="badge badge-pending">Pending</span>
             {% endif %}
         </p>
+        <h3 class="text-slate-600">
+            <strong>📅 Created:</strong>
+            {{ task.created }}
+        </h3>
     </div>
 
     <!-- Actions -->
