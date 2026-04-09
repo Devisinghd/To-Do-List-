@@ -13,3 +13,6 @@ def detail(request,id):
 def add_task(request):
     form = tasksForm()
     return render(request,'myapp/add-task.html',{'form':form})
+
+def update_task(request,id):
+    return render(request, 'myapp/update-task',{'task':task})
