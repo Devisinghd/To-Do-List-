@@ -59,14 +59,14 @@
 
 <div class="container">
     <h1>📋 My Tasks</h1>
-    <div><a href="">➕ Add New Task</a></div>
+    <div><a href="{% url 'mytodo:add_task' %}">➕ Add New Task</a></div>
     {% for task in tasks %}
     <div class="card">
         <div class="task-title">
         {% if task.is_completed %}
-            <span style="text-decoration: line-through;">{{ task.task }} (Done)</span>
+            <span style="text-decoration: line-through;">{{ task.task| upper }} (Done)</span>
         {% else %}
-            <span>{{ task.task }} (Pending)</span>
+            <span>{{ task.task| upper }} (Pending)</span>
         {% endif %}
         </div>
         <p>{{ task.description|truncatechars:60 }}</p>
