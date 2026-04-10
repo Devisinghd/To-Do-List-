@@ -9,5 +9,5 @@ class Jobs(models.Model):
     task = models.CharField(max_length=50)
     description =models.TextField(max_length=100)
     time = models.TimeField()
-    is_completed = models.BooleanField()
-    created = models.TimeField(auto_now_add=False)
+    is_completed = models.BooleanField(default=False)
+    created = models.TimeField(auto_now_add=True)
