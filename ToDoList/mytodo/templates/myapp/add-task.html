@@ -1,8 +1,23 @@
 {% extends "myapp/base.html" %}
-{% block body %}
-<form class="form-horizontal" method="post">
-    {% csrf_token %}
-    {{form}}
-    <button class="btn btn-primary rounded-pill" type="submit">Add Task</button>
-</form>
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 rounded-4">
+        <h3 class="text-center mb-4">Add New Task</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+
+            <div class="d-grid">
+                <button class="btn btn-primary rounded-pill py-2" type="submit">
+                    ➕ Add Task
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
