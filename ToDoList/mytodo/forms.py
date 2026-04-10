@@ -4,4 +4,4 @@ from .models import Jobs
 class tasksForm(forms.ModelForm):
     class Meta:
         model = Jobs
-        fields = ['task','description','time','is_completed']
+        fields = ['task','description','time']
