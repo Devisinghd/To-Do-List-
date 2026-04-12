@@ -54,11 +54,11 @@
             ⬅ Back
         </a>
 
-        <a href="#" class="btn btn-custom">
+        <a href="{% url 'mytodo:edit_task' task.id %}" class="btn btn-custom">
             ✏ Edit
         </a>
 
-        <a href="#" class="btn btn-danger">
+        <a href="{% url 'mytodo:delete_task' task.id %}" class="btn btn-danger">
             🗑 Delete
         </a>
     </div>
