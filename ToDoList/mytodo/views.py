@@ -31,8 +31,10 @@ def edit_task(request,id):
 
 def delete_task(request,id):
     task = Jobs.objects.get(id=id)
-    task.delete()
-    return redirect('mytodo:main')
+    if request.method == 'POST':
+        task.delete()
+        return redirect('mytodo:main')
+    return render(request,'myapp/confirm-delete.html')
 
 def toggle_complete(request, id):
     if request.method == 'POST':
