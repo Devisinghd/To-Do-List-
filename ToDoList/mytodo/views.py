@@ -34,4 +34,17 @@ def delete_task(request,id):
     task.delete()
     return redirect('mytodo:main')
 
+def toggle_complete(request, id):
+    if request.method == 'POST':
+        task = Jobs.objects.get(id=id)
+        task.is_completed = not task.is_completed
+        task.save()
+        from_page = request.POST.get('from_page', 'main')
+        if from_page == 'detail':
+            return redirect('mytodo:detail', id=id)
+        else:
+            return redirect('mytodo:main')
+    return redirect('mytodo:main')
+
+
 
