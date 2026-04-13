@@ -1,85 +1,63 @@
 {% extends "myapp/base.html" %}
+{% block title %}My Tasks | TaskSphere{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Tasks</title>
-    <style>
-        body {
-            font-family: Arial;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .container {
-            max-width: 900px;
-            margin: auto;
-        }
-        .card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-        }
-        .task-title {
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .status {
-            float: right;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: white;
-        }
-        .active {
-            background-color: green;
-        }
-        .inactive {
-            background-color: red;
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h1>📋 My Tasks</h1>
-    <div><a href="{% url 'mytodo:add_task' %}">➕ Add New Task</a></div>
-    {% for task in tasks %}
-    <div class="card">
-        <div class="task-title">
-        {% if task.is_completed %}
-            <span style="text-decoration: line-through;">{{ task.task| upper }} (Done)</span>
-        {% else %}
-            <span>{{ task.task| upper }} (Pending)</span>
-        {% endif %}
+<section class="space-y-6">
+    <div class="flex flex-col gap-4 border-b border-emerald-100 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-sm font-bold uppercase text-teal-700">Today</p>
+            <h1 class="mt-2 text-3xl font-black text-[#12312b] sm:text-4xl">My Tasks</h1>
         </div>
-        <p>{{ task.description|truncatechars:60 }}</p>
-        <small>⏰ {{ task.time }}</small>
-
-        <br>
-        <a href="{% url 'mytodo:detail' task.id %}" class="btn">View Details</a>
+        <a href="{% url 'mytodo:add_task' %}" class="inline-flex items-center justify-center rounded-lg bg-teal-700 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-teal-800">
+            Add New Task
+        </a>
     </div>
-    {% empty %}
-        <p>No tasks available.</p>
-    {% endfor %}
-</div>
 
-</body>
-</html>
+    <div class="grid gap-4">
+    {% for task in tasks %}
+        <article class="rounded-lg border border-emerald-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class="min-w-0">
+                    {% if task.is_completed %}
+                        <h2 class="break-words text-xl font-black uppercase text-[#64746f] line-through">{{ task.task }}</h2>
+                    {% else %}
+                        <h2 class="break-words text-xl font-black uppercase text-[#12312b]">{{ task.task }}</h2>
+                    {% endif %}
+                    <p class="mt-2 break-words text-[#52615c]">{{ task.description|title|truncatechars:90 }}</p>
+                </div>
+
+                {% if task.is_completed %}
+                    <span class="w-fit rounded-lg bg-emerald-100 px-3 py-1 text-sm font-bold text-emerald-800">✓ Done</span>
+                {% else %}
+                    <span class="w-fit rounded-lg bg-[#fff1e8] px-3 py-1 text-sm font-bold text-[#b44220]">Pending</span>
+                {% endif %}
+            </div>
+
+            <div class="mt-5 flex flex-col gap-3 border-t border-emerald-50 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-sm font-semibold text-[#64746f]">Time: {{ task.time }}</p>
+                <div class="flex gap-3">
+                    <form method="post" action="{% url 'mytodo:toggle_complete' task.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="from_page" value="index">
+                        <button type="submit" class="inline-flex items-center justify-center rounded-lg bg-teal-700 px-4 py-2 text-sm font-bold text-white transition hover:bg-teal-800">
+                            {% if task.is_completed %}❌Pending{% else %}✅Done{% endif %}
+                        </button>
+                    </form>
+                    <a href="{% url 'mytodo:detail' task.id %}" class="inline-flex items-center justify-center rounded-lg border border-teal-700 px-4 py-2 text-sm font-bold text-teal-800 transition hover:bg-teal-50">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="rounded-lg border border-dashed border-teal-300 bg-white p-8 text-center">
+            <h2 class="text-xl font-black text-[#12312b]">No tasks yet</h2>
+            <p class="mt-2 text-[#64746f]">Start with one small thing.</p>
+            <a href="{% url 'mytodo:add_task' %}" class="mt-5 inline-flex items-center justify-center rounded-lg bg-[#e45f35] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#c94d2a]">
+                Add Task
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+</section>
 {% endblock %}
