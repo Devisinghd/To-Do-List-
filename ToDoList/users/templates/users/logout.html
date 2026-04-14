@@ -1,0 +1,84 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Logout | TaskSphere{% endblock %}
+
+{% block extra_css %}
+<style>
+    .button-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1.5rem;
+        padding: 0.75rem 1.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .button-primary.logout {
+        background-color: #dc2626;
+        color: white;
+        box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.2);
+    }
+
+    .button-primary.logout:hover {
+        background-color: #b91c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 15px 20px -3px rgba(220, 38, 38, 0.3);
+    }
+
+    .button-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1.5rem;
+        padding: 0.75rem 1.75rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: 2px solid #0f766e;
+        color: #0f766e;
+        background: white;
+        transition: all 0.2s ease;
+    }
+
+    .button-secondary:hover {
+        background-color: #f0fdfa;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="min-h-[calc(100vh-160px)] flex items-center justify-center py-10">
+    <div class="w-full max-w-2xl rounded-[2rem] bg-gradient-to-br from-red-50 via-white to-slate-50 p-6 shadow-2xl shadow-slate-200 ring-1 ring-slate-200 sm:p-10">
+        <div class="space-y-8 text-center">
+            <div class="space-y-4">
+                <div class="text-5xl">👋</div>
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-700">Goodbye</p>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Leave TaskSphere?</h1>
+                <p class="mx-auto max-w-lg text-sm leading-7 text-slate-600 sm:text-base">
+                    You're about to log out of your account. You can log back in anytime to manage your tasks.
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+                <a href="{% url 'mytodo:main' %}" class="button-secondary">
+                    Keep me logged in
+                </a>
+                <form method="post" class="w-full sm:w-auto">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full button-primary logout">
+                        <a href="{% url 'users:login' %}">Yes, log me out</a>
+                    </button>
+                </form>
+            </div>
+
+            <p class="text-xs text-slate-500">
+                Have feedback? We'd love to hear from you.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
