@@ -14,14 +14,20 @@
     <!-- Header -->
     <header class="bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md">
         <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-white text-2xl font-bold tracking-wide">
+            <a href="{% url 'mytodo:main' %}">
+                <h1 class="text-white text-2xl font-bold tracking-wide">
                 📋 TaskSphere
-            </h1>
-
-            <a href="" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-                log in
+                </h1>
             </a>
-            <a href="" class ></a>
+
+            <div class="flex gap-3">
+                <a href="{% url 'users:login' %}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                    Log in
+                </a>
+                <a href="{% url 'users:logout' %}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                    Log out
+                </a>
+            </div>
         </div>
     </header>
     {% if messages %}
@@ -30,7 +36,7 @@
                 {{ message }}
             </div>
         {% endfor %}
-    {% endif %}
+    {% endif %}                                    
 
     <!-- Main Container -->
     <main class="max-w-5xl mx-auto px-4 py-8">
