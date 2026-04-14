@@ -1,0 +1,95 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}Log in | TaskSphere{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-card input,
+    .form-card select,
+    .form-card textarea {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid #d1d5db;
+        background: #ffffff;
+        padding: 0.95rem 1rem;
+        color: #111827;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-card input:focus,
+    .form-card select:focus,
+    .form-card textarea:focus {
+        outline: none;
+        border-color: #0f766e;
+        box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+    }
+
+    .form-card label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #334155;
+    }
+
+    .form-card .errorlist {
+        margin: 0.5rem 0 0 0;
+        padding-left: 1rem;
+        color: #b91c1c;
+        font-size: 0.95rem;
+    }
+
+    .form-card .field-error input {
+        border-color: #ef4444;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="min-h-[calc(100vh-160px)] flex items-center justify-center py-10">
+    <div class="w-full max-w-3xl rounded-[2rem] bg-gradient-to-br from-slate-50 via-white to-emerald-50 p-6 shadow-2xl shadow-slate-200 ring-1 ring-slate-200 sm:p-10">
+        <div class="grid gap-8 lg:grid-cols-[1.2fr,0.8fr] lg:items-center">
+            <div class="space-y-4">
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-teal-700">Welcome back</p>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">Log in to TaskSphere</h1>
+                <p class="max-w-xl text-sm leading-7 text-slate-600 sm:text-base">
+                    Access your task board, update your progress, and stay organized with a clean and responsive workspace.
+                </p>
+            </div>
+
+            <div class="rounded-[1.75rem] bg-white p-6 shadow-sm shadow-slate-200 ring-1 ring-slate-100 form-card">
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-slate-900">Sign in</h2>
+                    <p class="mt-2 text-sm text-slate-500">Enter your credentials to continue.</p>
+                </div>
+
+                <form method="post" novalidate class="space-y-5">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div>
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                    </div>
+
+                    <button type="submit" class="inline-flex w-full items-center justify-center rounded-3xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-700/20 transition hover:bg-teal-800">
+                        Log in
+                    </button>
+                </form>
+
+                <p class="mt-6 text-center text-sm text-slate-500">
+                    New here? <a href="{% url 'users:register' %}" class="font-semibold text-teal-700 hover:text-teal-800">Create an account</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
