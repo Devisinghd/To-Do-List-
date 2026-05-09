@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Jobs 
 from .forms import tasksForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+@login_required
 def main(request):
     tasks = Jobs.objects.all().order_by('-time')
     return render(request,'myapp/index.html',{'tasks':tasks})
@@ -10,6 +13,7 @@ def detail(request,id):
     task = Jobs.objects.get(id=id)
     return render(request,'myapp/detail.html',{'task':task})
 
+@login_required
 def add_task(request):
     form = tasksForm(request.POST or None)
     if request.method == 'POST':
